@@ -36,4 +36,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/cadastrocontatos:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/criarcontato:latest
