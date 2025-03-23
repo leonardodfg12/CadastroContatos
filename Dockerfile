@@ -3,8 +3,8 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
 # Copy csproj and restore as distinct layers
-COPY *.sln .
-COPY CadastroContatos.Producer.API/*.csproj ./CadastroContatos.Producer.API/
+COPY CadastroContatos.sln .
+COPY CadastroContatos.Producer.API/CadastroContatos.Producer.API.csproj ./CadastroContatos.Producer.API/
 RUN dotnet restore
 
 # Copy everything else and build
