@@ -1,3 +1,4 @@
+using CadastroContatos.Infrastructure.Consumers;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,9 +13,16 @@ namespace CadastroContatos.Infrastructure.Config
 
             services.AddMassTransit(x =>
             {
+                x.AddConsumer<ContatoConsumer>();
+                
                 x.UsingRabbitMq((context, cfg) =>
                 {
                     cfg.Host(rabbitMqHost);
+                    
+                    cfg.ReceiveEndpoint("cadastro-queue", e =>
+                    {
+                        e.ConfigureConsumer<ContatoConsumer>(context);
+                    });
 
                     cfg.ConfigureEndpoints(context);
                 });
