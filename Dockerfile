@@ -4,7 +4,7 @@ WORKDIR /app
 
 # Copy csproj and restore as distinct layers
 COPY CadastroContatos.sln .
-COPY CadastroContatos.Producer.API/CadastroContatos.Producer.API.csproj ./CadastroContatos.Producer.API/
+COPY src/CadastroContatos.Producer.API/CadastroContatos.Producer.API.csproj ./CadastroContatos.Producer.API/
 RUN dotnet restore
 
 # Copy everything else and build
