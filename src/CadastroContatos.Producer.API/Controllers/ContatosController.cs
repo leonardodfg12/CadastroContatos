@@ -1,57 +1,67 @@
-using CadastroContatos.Application.DTOs;
+using CadastroContatos.Application.Dtos;
 using CadastroContatos.Application.Services;
-using CadastroContatos.Domain.Domain;
 using CadastroContatos.Infrastructure.Data;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace CadastroContatos.Producer.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/")]
     [ApiController]
     public class ContatosController : ControllerBase
     {
         private readonly IContatoService _contatoService;
         private readonly ContactZoneDbContext _context;
+        private readonly IValidator<PostContactDto> _validator;
 
-        public ContatosController(IContatoService contatoService, ContactZoneDbContext context)
+        public ContatosController(IContatoService contatoService, ContactZoneDbContext context, IValidator<PostContactDto> validator)
         {
             _contatoService = contatoService;
             _context = context;
+            _validator = validator;
         }
 
-        [HttpPost("enviar-fila")]
-        public IActionResult EnviarContato([FromBody] ContatoDto? contatoDto)
+        [HttpPost("cadastro-mensageria")]
+        public IActionResult EnviarContato(PostContactDto dto)
         {
-            if (contatoDto == null)
-                return BadRequest("Dados inválidos.");
+            if (dto == null)
+                return BadRequest("Invalid contact data.");
 
-            _contatoService.EnviarContatoParaFila(contatoDto);
+            var contactDomain = PostContactDto.ToDomain(new PostContactDto() 
+            { 
+                Name = dto.Name,
+                Email = dto.Email,
+                Phone = dto.Phone,
+                DDD = dto.DDD,
+            });
+            
+            _contatoService.EnviarContatoParaFila(contactDomain);
 
             return Accepted(new { mensagem = "Contato enviado para a fila com sucesso!" });
         }
         
-        [HttpPost("cadastrar-direto-banco")]
-        public async Task<IActionResult> CadastrarContato([FromBody] ContatoDto? contatoDto)
+        [HttpPost("cadastro-api")]
+        public async Task<IActionResult> CadastrarContato(PostContactDto? dto)
         {
-            if (contatoDto == null)
-                return BadRequest("Dados inválidos.");
+            if (dto == null)
+                return BadRequest("Invalid contact data.");
 
-            var contato = new ContactDomain
-            {
-                Name = contatoDto.Name,
-                DDD = contatoDto.DDD,
-                Phone = contatoDto.Phone,
-                Email = contatoDto.Email
-            };
+            var contactDomain = PostContactDto.ToDomain(new PostContactDto() 
+            { 
+                Name = dto.Name,
+                Email = dto.Email,
+                Phone = dto.Phone,
+                DDD = dto.DDD,
+            });
 
-            _context.Contatos.Add(contato);
+            _context.Contatos.Add(contactDomain);
             await _context.SaveChangesAsync();
 
-            return Ok(new { mensagem = "Contato cadastrado com sucesso!" });
+            return Ok(contactDomain);
         }
         
-        [HttpGet("get-all")]
+        [HttpGet("listar-contatos")]
         public async Task<IActionResult> GetAllContatos()
         {
             var contatos = await _context.Contatos.ToListAsync();

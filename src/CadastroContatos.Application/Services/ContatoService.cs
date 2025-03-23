@@ -1,4 +1,4 @@
-using CadastroContatos.Application.DTOs;
+using CadastroContatos.Application.Dtos;
 using CadastroContatos.Domain.Domain;
 using MassTransit;
 using Microsoft.Extensions.Logging;
@@ -16,11 +16,11 @@ namespace CadastroContatos.Application.Services
             _logger = logger;
         }
 
-        public async void EnviarContatoParaFila(ContatoDto? contatoDto)
+        public async void EnviarContatoParaFila(ContactDomain? contatoDto)
         {
             var mensagem = new ContactDomain
             {
-                Id = contatoDto.Id,
+                Id = 0,
                 Name = contatoDto.Name,
                 DDD = contatoDto.DDD,
                 Phone = contatoDto.Phone,
