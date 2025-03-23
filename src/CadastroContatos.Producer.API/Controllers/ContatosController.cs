@@ -1,6 +1,9 @@
 using CadastroContatos.Application.DTOs;
 using CadastroContatos.Application.Services;
+using CadastroContatos.Domain.Domain;
+using CadastroContatos.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CadastroContatos.Producer.API.Controllers
 {
@@ -9,13 +12,15 @@ namespace CadastroContatos.Producer.API.Controllers
     public class ContatosController : ControllerBase
     {
         private readonly IContatoService _contatoService;
+        private readonly ContatosDbContext _context;
 
-        public ContatosController(IContatoService contatoService)
+        public ContatosController(IContatoService contatoService, ContatosDbContext context)
         {
             _contatoService = contatoService;
+            _context = context;
         }
 
-        [HttpPost]
+        [HttpPost("enviar-fila")]
         public IActionResult EnviarContato([FromBody] ContatoDto? contatoDto)
         {
             if (contatoDto == null)
@@ -24,6 +29,33 @@ namespace CadastroContatos.Producer.API.Controllers
             _contatoService.EnviarContatoParaFila(contatoDto);
 
             return Accepted(new { mensagem = "Contato enviado para a fila com sucesso!" });
+        }
+        
+        [HttpPost("cadastrar-direto-banco")]
+        public async Task<IActionResult> CadastrarContato([FromBody] ContatoDto? contatoDto)
+        {
+            if (contatoDto == null)
+                return BadRequest("Dados inválidos.");
+
+            var contato = new ContatoMessage
+            {
+                Name = contatoDto.Name,
+                DDD = contatoDto.DDD,
+                Phone = contatoDto.Phone,
+                Email = contatoDto.Email
+            };
+
+            _context.Contatos.Add(contato);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { mensagem = "Contato cadastrado com sucesso!" });
+        }
+        
+        [HttpGet("get-all")]
+        public async Task<IActionResult> GetAllContatos()
+        {
+            var contatos = await _context.Contatos.ToListAsync();
+            return Ok(contatos);
         }
     }
 }

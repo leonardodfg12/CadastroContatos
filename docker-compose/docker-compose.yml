@@ -12,9 +12,10 @@ services:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
 
-  sqlserver:
-    image: mcr.microsoft.com/mssql/server:2019-latest
+  mssql:
     container_name: sqlserver
+    hostname: sqlserver
+    image: mcr.microsoft.com/mssql/server:2019-latest
     environment:
       ACCEPT_EULA: "Y"
       MSSQL_SA_PASSWORD: "@Sql2019"

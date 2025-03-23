@@ -1,11 +1,17 @@
 using CadastroContatos.Application.Services;
 using CadastroContatos.Infrastructure.Config;
+using CadastroContatos.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure logging
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
+
+// Configura a conexão com o banco de dados
+builder.Services.AddDbContext<ContatosDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Configurar MassTransit via Infrastructure
 builder.Services.AddMassTransitConfiguration(builder.Configuration);
