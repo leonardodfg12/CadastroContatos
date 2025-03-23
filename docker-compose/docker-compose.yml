@@ -21,6 +21,8 @@ services:
       MSSQL_SA_PASSWORD: "@Sql2019"
     ports:
       - 1433:1433
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql   # Adiciona o script SQL
 
   cadastrocontatos:
     container_name: cadastrocontatos
@@ -31,3 +33,6 @@ services:
       - RABBITMQ_HOST=rabbitmq://rabbitmq
     ports:
       - "8080:8080"
+    depends_on:
+      - mssql
+      - rabbitmq

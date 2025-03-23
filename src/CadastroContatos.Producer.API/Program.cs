@@ -9,9 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
-// Configura a conexão com o banco de dados
+// Configura a conexão com o banco de dados com EnableRetryOnFailure
 builder.Services.AddDbContext<ContactZoneDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+        sqlServerOptions => sqlServerOptions.EnableRetryOnFailure()));
 
 // Configurar MassTransit via Infrastructure
 builder.Services.AddMassTransitConfiguration(builder.Configuration);
