@@ -1,19 +1,24 @@
-# Use the official .NET image as a build stage
+# Use a imagem oficial do SDK do .NET para construir o projeto
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
-# Copy csproj and restore as distinct layers
+# Copia todos os arquivos do projeto
 COPY CadastroContatos.sln .
-COPY src/CadastroContatos.Producer.API/CadastroContatos.Producer.API.csproj ./CadastroContatos.Producer.API/
+COPY src/ src/
+
+# Restaura as dependências
 RUN dotnet restore
 
-# Copy everything else and build
-COPY . .
-WORKDIR /app/CadastroContatos.Producer.API
+# Publica o projeto
+WORKDIR /app/src/CadastroContatos.Producer.API
 RUN dotnet publish -c Release -o out
 
-# Build runtime image
+# Usa a imagem do runtime do .NET para rodar a aplicação
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
-COPY --from=build /app/CadastroContatos.Producer.API/out .
+
+# Copia os arquivos publicados
+COPY --from=build /app/src/CadastroContatos.Producer.API/out .
+
+# Define o ponto de entrada
 ENTRYPOINT ["dotnet", "CadastroContatos.Producer.API.dll"]
