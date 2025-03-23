@@ -18,7 +18,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
 
 # Copia os arquivos publicados
-COPY --from=build /app/src/CriarContato.Producer.API/out . 
+COPY --from=build /app/src/CriarContato.API/out . 
 
 # Expõe a porta 8080
 EXPOSE 8080
