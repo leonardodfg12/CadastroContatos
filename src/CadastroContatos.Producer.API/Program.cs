@@ -10,7 +10,7 @@ builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
 // Configura a conexão com o banco de dados
-builder.Services.AddDbContext<ContatosDbContext>(options =>
+builder.Services.AddDbContext<ContactZoneDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Configurar MassTransit via Infrastructure

@@ -18,7 +18,7 @@ namespace CadastroContatos.Application.Services
 
         public async void EnviarContatoParaFila(ContatoDto? contatoDto)
         {
-            var mensagem = new ContatoMessage
+            var mensagem = new ContactDomain
             {
                 Id = Guid.NewGuid(),
                 Name = contatoDto.Name,

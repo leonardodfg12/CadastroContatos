@@ -4,11 +4,11 @@ using Microsoft.Extensions.Configuration;
 
 namespace CadastroContatos.Infrastructure.Data
 {
-    public class ContatosDbContextFactory : IDesignTimeDbContextFactory<ContatosDbContext>
+    public class ContatosDbContextFactory : IDesignTimeDbContextFactory<ContactZoneDbContext>
     {
-        public ContatosDbContext CreateDbContext(string[] args)
+        public ContactZoneDbContext CreateDbContext(string[] args)
         {
-            var optionsBuilder = new DbContextOptionsBuilder<ContatosDbContext>();
+            var optionsBuilder = new DbContextOptionsBuilder<ContactZoneDbContext>();
             
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "..", "CadastroContatos.Producer.API"))
@@ -18,7 +18,7 @@ namespace CadastroContatos.Infrastructure.Data
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             optionsBuilder.UseSqlServer(connectionString);
 
-            return new ContatosDbContext(optionsBuilder.Options);
+            return new ContactZoneDbContext(optionsBuilder.Options);
         }
     }
 }

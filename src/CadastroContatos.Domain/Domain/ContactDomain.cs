@@ -1,6 +1,6 @@
 namespace CadastroContatos.Domain.Domain
 {
-    public class ContatoMessage
+    public class ContactDomain
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

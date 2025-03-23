@@ -5,22 +5,22 @@ using Microsoft.Extensions.Logging;
 
 namespace CadastroContatos.Infrastructure.Consumers;
 
-public class ContatoConsumer : IConsumer<ContatoMessage>
+public class ContatoConsumer : IConsumer<ContactDomain>
 {
-    private readonly ContatosDbContext _context;
+    private readonly ContactZoneDbContext _context;
     private readonly ILogger<ContatoConsumer> _logger;
 
-    public ContatoConsumer(ContatosDbContext context, ILogger<ContatoConsumer> logger)
+    public ContatoConsumer(ContactZoneDbContext context, ILogger<ContatoConsumer> logger)
     {
         _context = context;
         _logger = logger;
     }
 
-    public async Task Consume(ConsumeContext<ContatoMessage> context)
+    public async Task Consume(ConsumeContext<ContactDomain> context)
     {
         var contatoMessage = context.Message;
         
-        var contato = new ContatoMessage
+        var contato = new ContactDomain
         {
             Id = contatoMessage.Id,
             Name = contatoMessage.Name,

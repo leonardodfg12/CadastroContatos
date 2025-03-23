@@ -12,9 +12,9 @@ namespace CadastroContatos.Producer.API.Controllers
     public class ContatosController : ControllerBase
     {
         private readonly IContatoService _contatoService;
-        private readonly ContatosDbContext _context;
+        private readonly ContactZoneDbContext _context;
 
-        public ContatosController(IContatoService contatoService, ContatosDbContext context)
+        public ContatosController(IContatoService contatoService, ContactZoneDbContext context)
         {
             _contatoService = contatoService;
             _context = context;
@@ -37,7 +37,7 @@ namespace CadastroContatos.Producer.API.Controllers
             if (contatoDto == null)
                 return BadRequest("Dados inválidos.");
 
-            var contato = new ContatoMessage
+            var contato = new ContactDomain
             {
                 Name = contatoDto.Name,
                 DDD = contatoDto.DDD,
