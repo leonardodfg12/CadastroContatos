@@ -20,7 +20,7 @@ namespace CadastroContatos.Application.Services
         {
             var mensagem = new ContactDomain
             {
-                Id = Guid.NewGuid(),
+                Id = contatoDto.Id,
                 Name = contatoDto.Name,
                 DDD = contatoDto.DDD,
                 Phone = contatoDto.Phone,
