@@ -10,7 +10,7 @@ COPY src/ src/
 RUN dotnet restore
 
 # Publica o projeto
-WORKDIR /app/src/CriarContato.Producer.API
+WORKDIR /app/src/CriarContato.API
 RUN dotnet publish -c Release -o out
 
 # Usa a imagem do runtime do .NET para rodar a aplicação
