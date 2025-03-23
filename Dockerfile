@@ -24,4 +24,4 @@ COPY --from=build /app/src/CriarContato.API/out .
 EXPOSE 8080
 
 # Define o ponto de entrada
-ENTRYPOINT ["dotnet", "CriarContato.Producer.API.dll"]
+ENTRYPOINT ["dotnet", "CriarContato.API.dll"]
