@@ -11,7 +11,7 @@ namespace CriarContato.Infrastructure.Data
             var optionsBuilder = new DbContextOptionsBuilder<ContactZoneDbContext>();
             
             IConfigurationRoot configuration = new ConfigurationBuilder()
-                .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "..", "CriarContato.Producer.API"))
+                .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "..", "CriarContato.API"))
                 .AddJsonFile("appsettings.json")
                 .Build();
 

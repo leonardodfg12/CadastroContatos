@@ -19,7 +19,7 @@ namespace CriarContato.Infrastructure.Config
                 {
                     cfg.Host(rabbitMqHost);
                     
-                    cfg.ReceiveEndpoint("cadastro-queue", e =>
+                    cfg.ReceiveEndpoint("criar-contato-queue", e =>
                     {
                         e.ConfigureConsumer<ContatoConsumer>(context);
                     });

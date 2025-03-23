@@ -5,7 +5,7 @@ using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace CriarContato.Producer.API.Controllers
+namespace CriarContato.API.Controllers
 {
     [Route("api/")]
     [ApiController]
@@ -22,7 +22,7 @@ namespace CriarContato.Producer.API.Controllers
             _validator = validator;
         }
 
-        [HttpPost("cadastro-mensageria")]
+        [HttpPost("criar-contato-mensageria")]
         public IActionResult EnviarContato(PostContactDto dto)
         {
             if (dto == null)
@@ -41,7 +41,7 @@ namespace CriarContato.Producer.API.Controllers
             return Accepted(new { mensagem = "Contato enviado para a fila com sucesso!", contato = contactDomain });
         }
         
-        [HttpPost("cadastro-api")]
+        [HttpPost("criar-contato-api")]
         public async Task<IActionResult> CadastrarContato(PostContactDto? dto)
         {
             if (dto == null)

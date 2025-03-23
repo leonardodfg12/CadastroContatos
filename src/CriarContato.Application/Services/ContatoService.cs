@@ -27,9 +27,9 @@ namespace CriarContato.Application.Services
                 Email = contatoDto.Email
             };
 
-            _logger.LogInformation("Sending message to queue: cadastro-queue");
+            _logger.LogInformation("Sending message to queue: criar-contato-queue");
 
-            var endpoint = await _bus.GetSendEndpoint(new Uri("queue:cadastro-queue"));
+            var endpoint = await _bus.GetSendEndpoint(new Uri("queue:criar-contato-queue"));
             await endpoint.Send(mensagem);
 
             _logger.LogInformation("Message sent successfully: {MessageId}", mensagem.Id);

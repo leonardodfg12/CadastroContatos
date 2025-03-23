@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{C3FE6A54-0C96-4878-BB32-C9BC505F0A6C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CriarContato.Producer.API", "src\CriarContato.Producer.API\CriarContato.Producer.API.csproj", "{BA1E33C4-253F-4A7A-86A1-3F3CF5ABC4C3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CriarContato.API", "src\CriarContato.API\CriarContato.API.csproj", "{BA1E33C4-253F-4A7A-86A1-3F3CF5ABC4C3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CriarContato.Application", "src\CriarContato.Application\CriarContato.Application.csproj", "{D92C4495-F828-47E7-9F17-D1C9794217BF}"
 EndProject
