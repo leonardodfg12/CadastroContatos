@@ -3,7 +3,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
 # Copia todos os arquivos do projeto
-COPY CadastroContatos.sln .
+COPY CadastroContatos.sln . 
 COPY src/ src/
 
 # Restaura as dependências
@@ -18,7 +18,10 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
 
 # Copia os arquivos publicados
-COPY --from=build /app/src/CadastroContatos.Producer.API/out .
+COPY --from=build /app/src/CadastroContatos.Producer.API/out . 
+
+# Expõe a porta 8080
+EXPOSE 8080
 
 # Define o ponto de entrada
 ENTRYPOINT ["dotnet", "CadastroContatos.Producer.API.dll"]
