@@ -21,3 +21,13 @@ services:
       MSSQL_SA_PASSWORD: "@Sql2019"
     ports:
       - 1433:1433
+
+  cadastrocontatos:
+    container_name: cadastrocontatos
+    image: leonardodfg12/cadastrocontatos:latest
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=CadastroContatosDb;User Id=sa;Password=@Sql2019;MultipleActiveResultSets=true;Encrypt=YES;TrustServerCertificate=YES
+      - RABBITMQ_HOST=rabbitmq://rabbitmq
+    ports:
+      - "8080:8080"
