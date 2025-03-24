@@ -1,27 +1,30 @@
-# Use a imagem oficial do SDK do .NET para construir o projeto
+# Use the official .NET image as a base image
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+
+# Set the working directory
 WORKDIR /app
 
-# Copia todos os arquivos do projeto
-COPY CriarContato.sln . 
-COPY src/ src/
-
-# Restaura as dependências
+# Copy the entire source code and restore dependencies
+COPY . ./
 RUN dotnet restore
 
-# Publica o projeto
-WORKDIR /app/src/CriarContato.API
-RUN dotnet publish -c Release -o out
+# Build the project
+RUN dotnet build --configuration Release --no-restore
 
-# Usa a imagem do runtime do .NET para rodar a aplicação
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+# Publish the project
+RUN dotnet publish --configuration Release --no-restore --output /app/publish
+
+# Use the official .NET runtime image as a base image
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+
+# Set the working directory
 WORKDIR /app
 
-# Copia os arquivos publicados
-COPY --from=build /app/src/CriarContato.API/out . 
+# Copy the published output from the build stage
+COPY --from=build /app/publish .
 
-# Expõe a porta 8080
+# Expose the port the app runs on
 EXPOSE 8080
 
-# Define o ponto de entrada
+# Run the application
 ENTRYPOINT ["dotnet", "CriarContato.API.dll"]
