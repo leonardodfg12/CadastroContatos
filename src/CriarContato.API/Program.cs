@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using CriarContato.Application.Dtos;
 using CriarContato.Application.Dtos.Validators;
 using CriarContato.Application.Services;
@@ -7,42 +8,51 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 
-var builder = WebApplication.CreateBuilder(args);
+namespace CriarContato.API;
 
-// Configure logging
-builder.Logging.ClearProviders();
-builder.Logging.AddConsole();
-
-// Configura a conexão com o banco de dados com EnableRetryOnFailure
-builder.Services.AddDbContext<ContactZoneDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
-        sqlServerOptions => sqlServerOptions.EnableRetryOnFailure()));
-
-// Configurar MassTransit via Infrastructure
-builder.Services.AddMassTransitConfiguration(builder.Configuration);
-
-// Adicionar serviços ao container
-builder.Services.AddScoped<IContatoService, ContatoService>();
-builder.Services.AddTransient<IValidator<PostContactDto>, PostContactDtoValidator>();
-
-// Add FluentValidation services
-builder.Services.AddFluentValidationAutoValidation();
-builder.Services.AddFluentValidationClientsideAdapters();
-builder.Services.AddValidatorsFromAssemblyContaining<Program>();
-
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var app = builder.Build();
-
-// Configuração do middleware
-if (app.Environment.IsDevelopment())
+public partial class Program
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CriarContato API V1"));
-}
+    [ExcludeFromCodeCoverage]
+    public static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
 
-app.UseAuthorization();
-app.MapControllers();
-app.Run();
+        // Configure logging
+        builder.Logging.ClearProviders();
+        builder.Logging.AddConsole();
+
+        // Configura a conexão com o banco de dados com EnableRetryOnFailure
+        builder.Services.AddDbContext<ContactZoneDbContext>(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
+                sqlServerOptions => sqlServerOptions.EnableRetryOnFailure()));
+
+        // Configurar MassTransit via Infrastructure
+        builder.Services.AddMassTransitConfiguration(builder.Configuration);
+
+        // Adicionar serviços ao container
+        builder.Services.AddScoped<IContatoService, ContatoService>();
+        builder.Services.AddTransient<IValidator<PostContactDto>, PostContactDtoValidator>();
+
+        // Add FluentValidation services
+        builder.Services.AddFluentValidationAutoValidation();
+        builder.Services.AddFluentValidationClientsideAdapters();
+        builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+
+        builder.Services.AddControllers();
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
+
+        var app = builder.Build();
+
+        // Configuração do middleware
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CriarContato API V1"));
+        }
+
+        app.UseAuthorization();
+        app.MapControllers();
+        app.Run();
+    }
+}

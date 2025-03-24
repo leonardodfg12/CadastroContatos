@@ -1,9 +1,11 @@
-﻿using CriarContato.Domain.Domain;
+﻿using System.Diagnostics.CodeAnalysis;
+using CriarContato.Domain.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CriarContato.Infrastructure.Data.FluentMap
 {
+    [ExcludeFromCodeCoverage]
     public class ContactMap : IEntityTypeConfiguration<ContactDomain>
     {
         public void Configure(EntityTypeBuilder<ContactDomain> builder)

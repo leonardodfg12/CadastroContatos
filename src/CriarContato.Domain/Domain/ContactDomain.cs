@@ -1,5 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace CriarContato.Domain.Domain
 {
+    [ExcludeFromCodeCoverage]
     public class ContactDomain
     {
         public int Id { get; set; }

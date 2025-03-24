@@ -1,4 +1,3 @@
-using CriarContato.Application.Dtos;
 using CriarContato.Domain.Domain;
 using MassTransit;
 using Microsoft.Extensions.Logging;

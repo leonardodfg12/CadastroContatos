@@ -1,9 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
 namespace CriarContato.Infrastructure.Data
 {
+    [ExcludeFromCodeCoverage]
     public class ContatosDbContextFactory : IDesignTimeDbContextFactory<ContactZoneDbContext>
     {
         public ContactZoneDbContext CreateDbContext(string[] args)

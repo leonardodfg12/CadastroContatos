@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using CriarContato.Infrastructure.Consumers;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
@@ -5,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace CriarContato.Infrastructure.Config
 {
+    [ExcludeFromCodeCoverage]
     public static class MassTransitConfig
     {
         public static void AddMassTransitConfiguration(this IServiceCollection services, IConfiguration configuration)

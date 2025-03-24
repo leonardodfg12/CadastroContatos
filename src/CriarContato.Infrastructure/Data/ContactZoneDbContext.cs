@@ -1,9 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
 using CriarContato.Domain.Domain;
 using CriarContato.Infrastructure.Data.FluentMap;
 using Microsoft.EntityFrameworkCore;
 
 namespace CriarContato.Infrastructure.Data
 {
+    [ExcludeFromCodeCoverage]
     public class ContactZoneDbContext : DbContext
     {
         public DbSet<ContactDomain> Contatos { get; set; }
