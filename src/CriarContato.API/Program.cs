@@ -44,6 +44,13 @@ public partial class Program
 
         var app = builder.Build();
 
+        // Garante que o banco e as tabelas existam antes de iniciar a aplicação
+        using (var scope = app.Services.CreateScope())
+        {
+            var dbContext = scope.ServiceProvider.GetRequiredService<ContactZoneDbContext>();
+            dbContext.Database.EnsureCreated();
+        }
+
         // Configuração do middleware
         if (app.Environment.IsDevelopment())
         {
